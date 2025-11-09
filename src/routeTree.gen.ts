@@ -17,6 +17,8 @@ import { Route as AuthenticatedSharedIndexRouteImport } from './routes/_authenti
 import { Route as AuthenticatedRecentIndexRouteImport } from './routes/_authenticated/recent/index'
 import { Route as AuthenticatedFavoritesIndexRouteImport } from './routes/_authenticated/favorites/index'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
+import { Route as AuthSignupIndexRouteImport } from './routes/_auth/signup/index'
+import { Route as AuthLoginIndexRouteImport } from './routes/_auth/login/index'
 import { Route as AuthFeaturesIndexRouteImport } from './routes/_auth/features/index'
 import { Route as AuthAboutIndexRouteImport } from './routes/_auth/about/index'
 
@@ -62,6 +64,16 @@ const AuthenticatedDashboardIndexRoute =
     path: '/dashboard/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthSignupIndexRoute = AuthSignupIndexRouteImport.update({
+  id: '/signup/',
+  path: '/signup/',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
+const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
+  id: '/login/',
+  path: '/login/',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
 const AuthFeaturesIndexRoute = AuthFeaturesIndexRouteImport.update({
   id: '/features/',
   path: '/features/',
@@ -77,6 +89,8 @@ export interface FileRoutesByFullPath {
   '/': typeof AuthIndexRoute
   '/about': typeof AuthAboutIndexRoute
   '/features': typeof AuthFeaturesIndexRoute
+  '/login': typeof AuthLoginIndexRoute
+  '/signup': typeof AuthSignupIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/favorites': typeof AuthenticatedFavoritesIndexRoute
   '/recent': typeof AuthenticatedRecentIndexRoute
@@ -87,6 +101,8 @@ export interface FileRoutesByTo {
   '/': typeof AuthIndexRoute
   '/about': typeof AuthAboutIndexRoute
   '/features': typeof AuthFeaturesIndexRoute
+  '/login': typeof AuthLoginIndexRoute
+  '/signup': typeof AuthSignupIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/favorites': typeof AuthenticatedFavoritesIndexRoute
   '/recent': typeof AuthenticatedRecentIndexRoute
@@ -100,6 +116,8 @@ export interface FileRoutesById {
   '/_auth/': typeof AuthIndexRoute
   '/_auth/about/': typeof AuthAboutIndexRoute
   '/_auth/features/': typeof AuthFeaturesIndexRoute
+  '/_auth/login/': typeof AuthLoginIndexRoute
+  '/_auth/signup/': typeof AuthSignupIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/favorites/': typeof AuthenticatedFavoritesIndexRoute
   '/_authenticated/recent/': typeof AuthenticatedRecentIndexRoute
@@ -112,6 +130,8 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/features'
+    | '/login'
+    | '/signup'
     | '/dashboard'
     | '/favorites'
     | '/recent'
@@ -122,6 +142,8 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/features'
+    | '/login'
+    | '/signup'
     | '/dashboard'
     | '/favorites'
     | '/recent'
@@ -134,6 +156,8 @@ export interface FileRouteTypes {
     | '/_auth/'
     | '/_auth/about/'
     | '/_auth/features/'
+    | '/_auth/login/'
+    | '/_auth/signup/'
     | '/_authenticated/dashboard/'
     | '/_authenticated/favorites/'
     | '/_authenticated/recent/'
@@ -204,6 +228,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_auth/signup/': {
+      id: '/_auth/signup/'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof AuthSignupIndexRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
+    '/_auth/login/': {
+      id: '/_auth/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthLoginIndexRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
     '/_auth/features/': {
       id: '/_auth/features/'
       path: '/features'
@@ -225,12 +263,16 @@ interface AuthRouteRouteChildren {
   AuthIndexRoute: typeof AuthIndexRoute
   AuthAboutIndexRoute: typeof AuthAboutIndexRoute
   AuthFeaturesIndexRoute: typeof AuthFeaturesIndexRoute
+  AuthLoginIndexRoute: typeof AuthLoginIndexRoute
+  AuthSignupIndexRoute: typeof AuthSignupIndexRoute
 }
 
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthIndexRoute: AuthIndexRoute,
   AuthAboutIndexRoute: AuthAboutIndexRoute,
   AuthFeaturesIndexRoute: AuthFeaturesIndexRoute,
+  AuthLoginIndexRoute: AuthLoginIndexRoute,
+  AuthSignupIndexRoute: AuthSignupIndexRoute,
 }
 
 const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
