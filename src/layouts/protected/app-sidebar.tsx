@@ -1,14 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-	FolderIcon,
-	Heart,
-	PlusIcon,
-	Share2,
-	Tag,
-	TimerIcon,
-} from "lucide-react";
+import { FolderIcon, Heart, Share2, Tag, TimerIcon } from "lucide-react";
 
 import { NavMain } from "./nav-main";
 import {
@@ -16,7 +9,7 @@ import {
 	SidebarContent,
 	SidebarHeader,
 } from "@/components/ui/sidebar";
-import { Button } from "@/components/ui/button";
+import { DocumentAction } from "@/components/DocumentAction";
 
 const data = {
 	user: {
@@ -77,21 +70,18 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar
-			className="top-0 fixed h-screen overflow-hidden border-none"
+			className="top-0 fixed h-screen overflow-hidden border-none backdrop-blur-xl"
 			{...props}
 		>
-			<SidebarHeader className="h-16">
+			<SidebarHeader className="h-16 bg-white/20">
 				<div>
 					<span className="font-bold text-xl">Agentorage</span>
 				</div>
 			</SidebarHeader>
 			<SidebarContent>
-				<div className="shadow p-2 border-1 rounded-md border-gray-200">
-					<div className="border-b border-gray-300 py-2">
-						<Button className="bg-indigo-500">
-							<PlusIcon className="" />
-							Add New
-						</Button>
+				<div className="p-2 border-none">
+					<div className="border-b border-white py-2">
+						<DocumentAction />
 					</div>
 					<span className="h-1 w-full"></span>
 					<NavMain items={data.navMain} />

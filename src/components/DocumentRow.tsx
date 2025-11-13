@@ -14,7 +14,7 @@ import {
 const DocumentRow = () => {
 	return (
 		<div className="flex w-full flex-col gap-6">
-			<Item variant="outline" className="w-full bg-slate-900">
+			<Item variant="outline" className="w-full bg-gray-200/50">
 				<ItemMedia>
 					<Avatar className="size-10 bg-gray-200">
 						<AvatarImage src="https://github.com/evilrabbit.png" />

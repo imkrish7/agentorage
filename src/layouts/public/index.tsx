@@ -7,7 +7,7 @@ const PublicLayout = () => {
 			<div className="fixed w-full top-0">
 				<Header />
 			</div>
-			<main className="absolute top-16 h-[calc(100%-64px)] w-full">
+			<main className="absolute top-[64px] h-[calc(100%-64px)] w-full">
 				<Outlet />
 			</main>
 		</div>

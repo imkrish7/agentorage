@@ -17,9 +17,11 @@ import { Route as AuthenticatedSharedIndexRouteImport } from './routes/_authenti
 import { Route as AuthenticatedRecentIndexRouteImport } from './routes/_authenticated/recent/index'
 import { Route as AuthenticatedFavoritesIndexRouteImport } from './routes/_authenticated/favorites/index'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
+import { Route as AuthenticatedCreateIndexRouteImport } from './routes/_authenticated/create/index'
 import { Route as AuthSignupIndexRouteImport } from './routes/_auth/signup/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/_auth/login/index'
 import { Route as AuthFeaturesIndexRouteImport } from './routes/_auth/features/index'
+import { Route as AuthActivateIndexRouteImport } from './routes/_auth/activate/index'
 import { Route as AuthAboutIndexRouteImport } from './routes/_auth/about/index'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
@@ -64,6 +66,12 @@ const AuthenticatedDashboardIndexRoute =
     path: '/dashboard/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedCreateIndexRoute =
+  AuthenticatedCreateIndexRouteImport.update({
+    id: '/create/',
+    path: '/create/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthSignupIndexRoute = AuthSignupIndexRouteImport.update({
   id: '/signup/',
   path: '/signup/',
@@ -79,6 +87,11 @@ const AuthFeaturesIndexRoute = AuthFeaturesIndexRouteImport.update({
   path: '/features/',
   getParentRoute: () => AuthRouteRoute,
 } as any)
+const AuthActivateIndexRoute = AuthActivateIndexRouteImport.update({
+  id: '/activate/',
+  path: '/activate/',
+  getParentRoute: () => AuthRouteRoute,
+} as any)
 const AuthAboutIndexRoute = AuthAboutIndexRouteImport.update({
   id: '/about/',
   path: '/about/',
@@ -88,9 +101,11 @@ const AuthAboutIndexRoute = AuthAboutIndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof AuthIndexRoute
   '/about': typeof AuthAboutIndexRoute
+  '/activate': typeof AuthActivateIndexRoute
   '/features': typeof AuthFeaturesIndexRoute
   '/login': typeof AuthLoginIndexRoute
   '/signup': typeof AuthSignupIndexRoute
+  '/create': typeof AuthenticatedCreateIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/favorites': typeof AuthenticatedFavoritesIndexRoute
   '/recent': typeof AuthenticatedRecentIndexRoute
@@ -100,9 +115,11 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof AuthIndexRoute
   '/about': typeof AuthAboutIndexRoute
+  '/activate': typeof AuthActivateIndexRoute
   '/features': typeof AuthFeaturesIndexRoute
   '/login': typeof AuthLoginIndexRoute
   '/signup': typeof AuthSignupIndexRoute
+  '/create': typeof AuthenticatedCreateIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/favorites': typeof AuthenticatedFavoritesIndexRoute
   '/recent': typeof AuthenticatedRecentIndexRoute
@@ -115,9 +132,11 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_auth/': typeof AuthIndexRoute
   '/_auth/about/': typeof AuthAboutIndexRoute
+  '/_auth/activate/': typeof AuthActivateIndexRoute
   '/_auth/features/': typeof AuthFeaturesIndexRoute
   '/_auth/login/': typeof AuthLoginIndexRoute
   '/_auth/signup/': typeof AuthSignupIndexRoute
+  '/_authenticated/create/': typeof AuthenticatedCreateIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/favorites/': typeof AuthenticatedFavoritesIndexRoute
   '/_authenticated/recent/': typeof AuthenticatedRecentIndexRoute
@@ -129,9 +148,11 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/activate'
     | '/features'
     | '/login'
     | '/signup'
+    | '/create'
     | '/dashboard'
     | '/favorites'
     | '/recent'
@@ -141,9 +162,11 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/activate'
     | '/features'
     | '/login'
     | '/signup'
+    | '/create'
     | '/dashboard'
     | '/favorites'
     | '/recent'
@@ -155,9 +178,11 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/_auth/'
     | '/_auth/about/'
+    | '/_auth/activate/'
     | '/_auth/features/'
     | '/_auth/login/'
     | '/_auth/signup/'
+    | '/_authenticated/create/'
     | '/_authenticated/dashboard/'
     | '/_authenticated/favorites/'
     | '/_authenticated/recent/'
@@ -228,6 +253,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/create/': {
+      id: '/_authenticated/create/'
+      path: '/create'
+      fullPath: '/create'
+      preLoaderRoute: typeof AuthenticatedCreateIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_auth/signup/': {
       id: '/_auth/signup/'
       path: '/signup'
@@ -249,6 +281,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthFeaturesIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
+    '/_auth/activate/': {
+      id: '/_auth/activate/'
+      path: '/activate'
+      fullPath: '/activate'
+      preLoaderRoute: typeof AuthActivateIndexRouteImport
+      parentRoute: typeof AuthRouteRoute
+    }
     '/_auth/about/': {
       id: '/_auth/about/'
       path: '/about'
@@ -262,6 +301,7 @@ declare module '@tanstack/react-router' {
 interface AuthRouteRouteChildren {
   AuthIndexRoute: typeof AuthIndexRoute
   AuthAboutIndexRoute: typeof AuthAboutIndexRoute
+  AuthActivateIndexRoute: typeof AuthActivateIndexRoute
   AuthFeaturesIndexRoute: typeof AuthFeaturesIndexRoute
   AuthLoginIndexRoute: typeof AuthLoginIndexRoute
   AuthSignupIndexRoute: typeof AuthSignupIndexRoute
@@ -270,6 +310,7 @@ interface AuthRouteRouteChildren {
 const AuthRouteRouteChildren: AuthRouteRouteChildren = {
   AuthIndexRoute: AuthIndexRoute,
   AuthAboutIndexRoute: AuthAboutIndexRoute,
+  AuthActivateIndexRoute: AuthActivateIndexRoute,
   AuthFeaturesIndexRoute: AuthFeaturesIndexRoute,
   AuthLoginIndexRoute: AuthLoginIndexRoute,
   AuthSignupIndexRoute: AuthSignupIndexRoute,
@@ -280,6 +321,7 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 )
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedCreateIndexRoute: typeof AuthenticatedCreateIndexRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedFavoritesIndexRoute: typeof AuthenticatedFavoritesIndexRoute
   AuthenticatedRecentIndexRoute: typeof AuthenticatedRecentIndexRoute
@@ -288,6 +330,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedCreateIndexRoute: AuthenticatedCreateIndexRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
   AuthenticatedFavoritesIndexRoute: AuthenticatedFavoritesIndexRoute,
   AuthenticatedRecentIndexRoute: AuthenticatedRecentIndexRoute,

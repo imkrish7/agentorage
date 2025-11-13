@@ -14,7 +14,7 @@ const FolderCard = () => {
 								Documents
 							</span>
 						</div>
-						<div className="h-[90%] bg-white relative rounded-l-md w-full relative">
+						<div className="h-[90%] bg-white/60 backdrop-blur-3xl relative rounded-l-md w-full relative">
 							<div className=" absolute bottom-10 *:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
 								<Avatar>
 									<AvatarImage
@@ -40,7 +40,7 @@ const FolderCard = () => {
 							</div>
 						</div>
 					</div>
-					<div className="bg-white relative h-full rounded-r-md rounded-tl-xl">
+					<div className="bg-white/60 backdrop-blur-3xl relative h-full rounded-r-md rounded-tl-xl">
 						<Button
 							variant={"ghost"}
 							className="absolute right-1 top-1 cursor-pointer"

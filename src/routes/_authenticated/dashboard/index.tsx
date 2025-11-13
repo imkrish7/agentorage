@@ -1,6 +1,6 @@
 import DocumentRow from "@/components/DocumentRow";
 import { FolderCard } from "@/components/FolderCard";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 const Component = () => {
 	return (
@@ -17,8 +17,15 @@ const Component = () => {
 				})}
 			</div>
 		</div>
-	)
+	);
 };
 export const Route = createFileRoute("/_authenticated/dashboard/")({
+	beforeLoad: ({ context }) => {
+		if (!context.isAuthorized) {
+			throw redirect({
+				to: "/login",
+			});
+		}
+	},
 	component: Component,
 });

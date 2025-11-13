@@ -16,7 +16,7 @@ function RouteComponent() {
 						<span className="font-bold">your files</span>
 						<span className="font-bold flex gap-2">
 							in
-							<span className="bg-red-100/40 rounded-sm drop-shadow p-2 -rotate-5">
+							<span className="bg-red-100/80 rounded-sm drop-shadow p-2 -rotate-5">
 								one place
 							</span>
 						</span>

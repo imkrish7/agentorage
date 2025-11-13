@@ -48,7 +48,7 @@ const MenuItem = ({ item }: { item: Item }) => {
 				className="cursor-pointer flex rounded-md w-full h-full font-bold"
 			>
 				<SidebarMenuButton
-					className="flex flex-col items-start h-full w-full gap-2 hover:bg-sidebar-none"
+					className="flex flex-col bg-white/40 backdrop-blur-3xl items-start h-full w-full gap-2 hover:bg-sidebar-none"
 					tooltip={item.title}
 				>
 					<span
