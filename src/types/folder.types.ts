@@ -1,5 +1,7 @@
 export interface Folder {
+	_id: string;
 	name: string;
+	alias: string;
 	parentId: string;
 	createdBy: string;
 	ownerBy: string;
@@ -8,4 +10,9 @@ export interface Folder {
 	};
 	createdAt: string;
 	updatedAt: string;
+}
+
+export interface CreateFolder {
+	parentId: string;
+	name: string;
 }

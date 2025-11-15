@@ -17,35 +17,16 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
-import { useState } from "react";
+import { startTransition, useState, type FC } from "react";
+import type { Folder } from "@/types/folder.types";
 
-const frameworks = [
-	{
-		value: "next.js",
-		label: "Next.js",
-	},
-	{
-		value: "sveltekit",
-		label: "SvelteKit",
-	},
-	{
-		value: "nuxt.js",
-		label: "Nuxt.js",
-	},
-	{
-		value: "remix",
-		label: "Remix",
-	},
-	{
-		value: "astro",
-		label: "Astro",
-	},
-];
-
-export const FolderList = () => {
+interface IProps {
+	folders: Folder[];
+	handleChange: (folderId: string) => void;
+}
+export const FolderList: FC<IProps> = ({ folders, handleChange }) => {
 	const [open, setOpen] = useState(false);
 	const [value, setValue] = useState("");
-
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
 			<PopoverTrigger asChild>
@@ -56,10 +37,8 @@ export const FolderList = () => {
 					className="w-full justify-between border-none bg-white/50"
 				>
 					{value
-						? frameworks.find(
-								(framework) => framework.value === value,
-							)?.label
-						: "Select framework..."}
+						? folders.find((folder) => folder._id === value)?.alias
+						: "Select folder..."}
 					<ChevronsUpDown className="opacity-50" />
 				</Button>
 			</PopoverTrigger>
@@ -72,36 +51,41 @@ export const FolderList = () => {
 			>
 				<Command className="w-full border-none">
 					<CommandInput
-						placeholder="Search framework..."
+						placeholder="Search folder..."
 						className="h-9"
 					/>
 					<CommandList className="w-full border-none">
 						<CommandEmpty>No framework found.</CommandEmpty>
 						<CommandGroup className="w-full border-none">
-							{frameworks.map((framework) => (
-								<CommandItem
-									key={framework.value}
-									value={framework.value}
-									onSelect={(currentValue) => {
-										setValue(
-											currentValue === value
-												? ""
-												: currentValue,
-										);
-										setOpen(false);
-									}}
-								>
-									{framework.label}
-									<Check
-										className={cn(
-											"ml-auto",
-											value === framework.value
-												? "opacity-100"
-												: "opacity-0",
-										)}
-									/>
-								</CommandItem>
-							))}
+							{folders.length > 0 &&
+								folders.map((folder) => (
+									<CommandItem
+										key={folder._id}
+										value={folder._id}
+										title={folder.alias}
+										onSelect={(currentValue) => {
+											startTransition(() => {
+												setValue(
+													currentValue === value
+														? ""
+														: currentValue,
+												);
+												handleChange(currentValue);
+												setOpen(false);
+											});
+										}}
+									>
+										{folder.alias}
+										<Check
+											className={cn(
+												"ml-auto",
+												value === folder._id
+													? "opacity-100"
+													: "opacity-0",
+											)}
+										/>
+									</CommandItem>
+								))}
 						</CommandGroup>
 					</CommandList>
 				</Command>

@@ -16,8 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signupSchema } from "@/schemas/auth";
 import type z from "zod";
 import { useAuth, useAuthState } from "@/services/authService";
-import Loader from "@/components/Loader";
-import { toast } from "sonner";
+import { Spinner } from "@/components/ui/spinner";
 
 export const Route = createFileRoute("/_auth/signup/")({
 	component: RouteComponent,
@@ -42,12 +41,7 @@ function RouteComponent() {
 		});
 	};
 
-	if (authState.matches({ unauthorized: "trySigningup" })) {
-		return <Loader />;
-	}
-
 	if (authState.matches({ unauthorized: "gotoLogin" })) {
-		toast.success("Signup completed!");
 		return <Navigate to="/login" />;
 	}
 
@@ -126,6 +120,9 @@ function RouteComponent() {
 								variant={"outline"}
 								className="border-2 bg-transparent hover:transparent mt-2 rounded-none"
 							>
+								{authState.matches({
+									unauthorized: "trySigningup",
+								}) && <Spinner className="text-white size-6" />}
 								Sign up
 							</Button>
 						</form>

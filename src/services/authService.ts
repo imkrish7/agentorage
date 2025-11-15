@@ -2,8 +2,8 @@ import { authMachine } from "@/machines/authMachin";
 import { createActorContext } from "@xstate/react";
 
 export const AuthService = createActorContext(authMachine, {
-	inspect: (inspectEvent) => {
-		console.log(inspectEvent);
+	inspect: () => {
+		// console.log(inspectEvent);
 	},
 });
 

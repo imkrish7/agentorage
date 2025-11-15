@@ -10,21 +10,20 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema } from "@/schemas/auth";
 import { useAuth, useAuthState } from "@/services/authService";
 import type z from "zod";
 import Loader from "@/components/Loader";
-import { useEffect } from "react";
+import { Spinner } from "@/components/ui/spinner";
 
 export const Route = createFileRoute("/_auth/login/")({
 	component: RouteComponent,
 });
 
 function RouteComponent() {
-	const navigation = useNavigate();
 	const authState = useAuthState((state) => state);
 	const auth = useAuth();
 	const form = useForm({
@@ -43,17 +42,7 @@ function RouteComponent() {
 	};
 
 	if (authState.matches("authorized")) {
-		navigation({ to: "/dashboard" });
-	}
-
-	useEffect(() => {
-		auth.subscribe((state) => {
-			console.log(state.value);
-		});
-	});
-
-	if (authState.matches("refreshSession")) {
-		return <h1>Krishna</h1>;
+		return <Navigate to={"/dashboard"} />;
 	}
 
 	return (
@@ -110,16 +99,18 @@ function RouteComponent() {
 							/>
 							<Button
 								variant={"outline"}
-								className="border-2 bg-transparent hover:transparent mt-2 rounded-none"
+								className="border-2 bg-transparent hover:bg-white/20 mt-2 rounded-none"
 							>
+								{authState.matches({
+									unauthorized: "trySigningin",
+								}) && <Spinner className="text-white size-6" />}
 								Log in
 							</Button>
 						</form>
 					</Form>
 				</CardContent>
 			</Card>
-			{(authState.matches({ unauthorized: "trySigningin" }) ||
-				authState.matches("refreshSession")) && (
+			{authState.matches("refreshSession") && (
 				<div className="absolute top-0 left-0 h-full w-full flex items-center bg-gray-100/20 backdrop-blur-2xl">
 					<Loader />
 				</div>

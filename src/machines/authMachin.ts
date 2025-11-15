@@ -110,7 +110,6 @@ export const authMachine = setup({
 						LOGIN: {
 							target: "trySigningin",
 							actions: assign(({ event }) => {
-								console.log("krishna2");
 								return {
 									loginCredential: event.loginCredential,
 								};
@@ -149,7 +148,7 @@ export const authMachine = setup({
 							}),
 						},
 						onError: {
-							target: "..userActions",
+							target: "userActions",
 							actions: () => {
 								toast.error("Failed to login");
 							},
@@ -160,7 +159,7 @@ export const authMachine = setup({
 					always: [
 						{
 							guard: "isAccountActivated",
-							target: "..activateAccount",
+							target: "activateAccount",
 						},
 						{
 							target: "...authorized",
@@ -233,7 +232,7 @@ export const authMachine = setup({
 							},
 						},
 						onError: {
-							target: "...userActions",
+							target: "userActions",
 							actions: () => {
 								toast.error("Failed to signup");
 							},
@@ -241,7 +240,7 @@ export const authMachine = setup({
 					},
 				},
 				gotoLogin: {
-					target: ".userActions",
+					target: "#auth.unauthorized.userActions",
 				},
 			},
 		},
@@ -269,6 +268,7 @@ export const authMachine = setup({
 							loginResponse: null,
 							loginRequest: null,
 							email: null,
+							isAuthorized: false,
 						};
 					},
 				},
@@ -284,6 +284,7 @@ export const authMachine = setup({
 							loginResponse: null,
 							loginRequest: null,
 							email: null,
+							isAuthorized: false,
 						};
 					}),
 				},

@@ -1,12 +1,13 @@
-import { getFoldersAction } from "@/apiService/folder";
-import type { Folder } from "@/types/folder.types";
+import { createFolderAction, getFoldersAction } from "@/apiService/folder";
+import type { CreateFolder, Folder } from "@/types/folder.types";
 import { toast } from "sonner";
 import { assign, fromPromise, setup } from "xstate";
 
 export const documentMachine = setup({
 	types: {
 		context: {} as {
-			folders: Folder[] | null;
+			folders: Folder[];
+			newFolder: CreateFolder | null;
 		},
 		events: {} as
 			| {
@@ -14,19 +15,30 @@ export const documentMachine = setup({
 			  }
 			| {
 					type: "CANCEL";
+			  }
+			| {
+					type: "CREATE_FOLDER";
+					folder: CreateFolder;
 			  },
 	},
 	actors: {
 		fetchFolders: fromPromise(async () => {
 			const response = await getFoldersAction();
-			return response;
+			return response.data;
 		}),
+		addingFolder: fromPromise(
+			async ({ input }: { input: CreateFolder }) => {
+				const response = await createFolderAction(input);
+				return response;
+			},
+		),
 	},
 }).createMachine({
 	id: "document",
 	initial: "idle",
 	context: {
-		folders: null,
+		folders: [],
+		newFolder: null,
 	},
 	states: {
 		idle: {
@@ -41,7 +53,7 @@ export const documentMachine = setup({
 					invoke: {
 						src: "fetchFolders",
 						onDone: {
-							target: "..loaded",
+							target: "loaded",
 							actions: assign(({ event }) => {
 								return {
 									folders: event.output,
@@ -49,23 +61,41 @@ export const documentMachine = setup({
 							}),
 						},
 						onError: {
-							target: "..loaded",
+							target: "loaded",
 							actions: () => {
 								toast.error("Failed to load folders!");
 							},
 						},
 					},
 				},
-				retry: {
-					after: {
-						500: {
-							target: "..loadFolders",
+				loaded: {
+					on: {
+						CANCEL: "#document.idle",
+						CREATE_FOLDER: {
+							target: "creatingFolder",
+							actions: assign(({ event }) => {
+								return {
+									newFolder: event.folder,
+								};
+							}),
 						},
 					},
 				},
-				loaded: {
-					on: {
-						CANCEL: "..idle",
+				creatingFolder: {
+					invoke: {
+						src: "addingFolder",
+						input: ({ context }) => {
+							if (!context.newFolder) {
+								throw new Error("Bad request!");
+							}
+							return context.newFolder;
+						},
+						onDone: {
+							target: "#document.idle",
+						},
+						onError: {
+							target: "loaded",
+						},
 					},
 				},
 			},

@@ -1,5 +1,6 @@
 import { config } from "@/config";
 import { headers } from "./apiConfig";
+import type { CreateFolder } from "@/types/folder.types";
 
 export const getFoldersAction = async () => {
 	try {
@@ -9,6 +10,31 @@ export const getFoldersAction = async () => {
 				...headers,
 				Authorization: `Bearer ${localStorage.getItem("AUTH_ACCESS")}`,
 			},
+			credentials: "include",
+		});
+
+		if (!response.ok) {
+			throw new Error("Failed to fetch folders");
+		}
+
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+};
+
+export const createFolderAction = async (payload: CreateFolder) => {
+	console.log(payload);
+	try {
+		const response = await fetch(`${config.API_END}/folders/create`, {
+			method: "POST",
+			headers: {
+				...headers,
+				Authorization: `Bearer ${localStorage.getItem("AUTH_ACCESS")}`,
+			},
+			body: JSON.stringify(payload),
 			credentials: "include",
 		});
 
