@@ -10,6 +10,7 @@ import {
 	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
+	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useDocumentService } from "@/services/documentService";
@@ -40,6 +41,11 @@ export const DocumentAction = () => {
 						>
 							New Folder
 						</DropdownMenuItem>
+					</DropdownMenuGroup>
+					<DropdownMenuSeparator />
+					<DropdownMenuGroup>
+						<DropdownMenuLabel>Other</DropdownMenuLabel>
+						<DropdownMenuItem>New tag</DropdownMenuItem>
 					</DropdownMenuGroup>
 				</DropdownMenuContent>
 			</DropdownMenu>
