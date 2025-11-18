@@ -2,16 +2,23 @@ import { CircleChevronRight, EllipsisVertical } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
+import type { FC } from "react";
+import type { Folder } from "@/types/folder.types";
 
-const FolderCard = () => {
+interface IProps {
+	className: string;
+	folder: Folder;
+}
+
+const FolderCard: FC<IProps> = ({ className, folder }) => {
 	return (
-		<Card className="w-60 h-40 border-none shadow-md p-0">
+		<Card className={`w-60 h-40 border-none shadow-md p-0 ${className}`}>
 			<CardContent className="h-full w-full p-0">
 				<div className="w-full h-full bg-indigo-200 grid grid-cols-2 rounded-md border-4 border-indigo-200">
 					<div className="h-full relative justify-end flex flex-col">
 						<div className="rounded-br-md folded-rectangle flex justify-center bg-indigo-200 z-10">
 							<span className="text-md text-center font-bold">
-								Documents
+								{folder.alias}
 							</span>
 						</div>
 						<div className="h-[90%] bg-white/60 backdrop-blur-3xl relative rounded-l-md w-full relative">

@@ -1,11 +1,14 @@
 import Layout from "@/layouts/protected/layout";
+import CenteralServiceProvider from "@/providers/CenteralServiceProvider";
 import { DocumentService } from "@/services/documentService";
 import { createFileRoute } from "@tanstack/react-router";
 
 const RouteComponent = () => {
 	return (
 		<DocumentService.Provider>
-			<Layout />
+			<CenteralServiceProvider>
+				<Layout />
+			</CenteralServiceProvider>
 		</DocumentService.Provider>
 	);
 };

@@ -23,6 +23,7 @@ export const documentMachine = setup({
 	},
 	actors: {
 		fetchFolders: fromPromise(async () => {
+			console.log("callleddd");
 			const response = await getFoldersAction();
 			return response.data;
 		}),

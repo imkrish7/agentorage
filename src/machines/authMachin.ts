@@ -1,5 +1,6 @@
 import {
 	loginAction,
+	logoutAction,
 	refreshSessionAction,
 	signupAction,
 } from "@/apiService/auth";
@@ -77,6 +78,10 @@ export const authMachine = setup({
 				};
 			},
 		),
+		gettingUserLoggedout: fromPromise(async () => {
+			const response = await logoutAction();
+			return response;
+		}),
 	},
 }).createMachine({
 	id: "auth",
@@ -275,18 +280,43 @@ export const authMachine = setup({
 			},
 		},
 		authorized: {
-			on: {
-				LOGOUT: {
-					target: "unauthorized",
-					actions: assign(() => {
-						localStorage.clear();
-						return {
-							loginResponse: null,
-							loginRequest: null,
-							email: null,
-							isAuthorized: false,
-						};
-					}),
+			initial: "actions",
+			states: {
+				actions: {
+					on: {
+						LOGOUT: {
+							target: "loggingout",
+						},
+					},
+				},
+				loggingout: {
+					invoke: {
+						src: "gettingUserLoggedout",
+						onDone: {
+							target: "#auth.unauthorized",
+							actions: assign(() => {
+								localStorage.clear();
+								return {
+									loginResponse: null,
+									loginRequest: null,
+									email: null,
+									isAuthorized: false,
+								};
+							}),
+						},
+						onError: {
+							target: "#auth.unauthorized",
+							actions: assign(() => {
+								localStorage.clear();
+								return {
+									loginResponse: null,
+									loginRequest: null,
+									email: null,
+									isAuthorized: false,
+								};
+							}),
+						},
+					},
 				},
 			},
 		},

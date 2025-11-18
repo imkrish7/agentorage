@@ -58,3 +58,25 @@ export const refreshSessionAction = async () => {
 		throw error;
 	}
 };
+
+export const logoutAction = async () => {
+	try {
+		const response = await fetch(`${config.API_END}/auth/logout`, {
+			method: "GET",
+			headers: {
+				...headers,
+				Authorization: `Bearer ${localStorage.getItem("AUTH_ACCESS")}`,
+			},
+			credentials: "include",
+		});
+
+		if (!response.ok) {
+			throw new Error("Failed to refresh session");
+		}
+		const data = await response.json();
+		return data;
+	} catch (error) {
+		console.error(error);
+		throw error;
+	}
+};
