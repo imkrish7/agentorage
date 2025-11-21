@@ -19,11 +19,13 @@ export const documentMachine = setup({
 			| {
 					type: "CREATE_FOLDER";
 					folder: CreateFolder;
+			  }
+			| {
+					type: "GOTO_DOCUMENT";
 			  },
 	},
 	actors: {
 		fetchFolders: fromPromise(async () => {
-			console.log("callleddd");
 			const response = await getFoldersAction();
 			return response.data;
 		}),
@@ -45,9 +47,64 @@ export const documentMachine = setup({
 		idle: {
 			on: {
 				GOTO_FOLDER: "folder",
+				GOTO_DOCUMENT: "document",
 			},
 		},
 		folder: {
+			initial: "loadFolders",
+			states: {
+				loadFolders: {
+					invoke: {
+						src: "fetchFolders",
+						onDone: {
+							target: "loaded",
+							actions: assign(({ event }) => {
+								return {
+									folders: event.output,
+								};
+							}),
+						},
+						onError: {
+							target: "loaded",
+							actions: () => {
+								toast.error("Failed to load folders!");
+							},
+						},
+					},
+				},
+				loaded: {
+					on: {
+						CANCEL: "#document.idle",
+						CREATE_FOLDER: {
+							target: "creatingFolder",
+							actions: assign(({ event }) => {
+								return {
+									newFolder: event.folder,
+								};
+							}),
+						},
+					},
+				},
+				creatingFolder: {
+					invoke: {
+						src: "addingFolder",
+						input: ({ context }) => {
+							if (!context.newFolder) {
+								throw new Error("Bad request!");
+							}
+							return context.newFolder;
+						},
+						onDone: {
+							target: "#document.idle",
+						},
+						onError: {
+							target: "loaded",
+						},
+					},
+				},
+			},
+		},
+		document: {
 			initial: "loadFolders",
 			states: {
 				loadFolders: {

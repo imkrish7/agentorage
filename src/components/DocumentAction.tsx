@@ -29,7 +29,13 @@ export const DocumentAction = () => {
 				<DropdownMenuContent className="w-40 border-none" align="end">
 					<DropdownMenuLabel>Document Actions</DropdownMenuLabel>
 					<DropdownMenuGroup>
-						<DropdownMenuItem onSelect={() => {}}>
+						<DropdownMenuItem
+							onSelect={() => {
+								documentService.send({
+									type: "GOTO_DOCUMENT",
+								});
+							}}
+						>
 							New File
 						</DropdownMenuItem>
 						<DropdownMenuItem

@@ -5,7 +5,9 @@ import type { CreateFolder } from "@/types/folder.types";
 export const getFoldersAction = async (rootFolder?: string) => {
 	try {
 		const response = await fetch(
-			`${config.API_END}/folders/${rootFolder}`,
+			rootFolder
+				? `${config.API_END}/folders/${rootFolder}`
+				: `${config.API_END}/folders`,
 			{
 				method: "GET",
 				headers: {

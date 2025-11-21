@@ -245,7 +245,7 @@ export const authMachine = setup({
 					},
 				},
 				gotoLogin: {
-					target: "#auth.unauthorized.userActions",
+					target: "userActions",
 				},
 			},
 		},

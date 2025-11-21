@@ -4,6 +4,7 @@ import { SiteHeader } from "./site-header";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { useDocumentServiceState } from "@/services/documentService";
 import FolderCreate from "@/components/FolderCreate";
+import DocumentCreate from "@/components/DocumentCreate";
 
 // export const iframeHeight = "800px"
 
@@ -25,6 +26,7 @@ export default function Layout() {
 				</div>
 			</SidebarProvider>
 			{documentServiceState.matches("folder") && <FolderCreate />}
+			{documentServiceState.matches("document") && <DocumentCreate />}
 		</div>
 	);
 }

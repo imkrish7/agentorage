@@ -34,28 +34,28 @@ export const FolderList: FC<IProps> = ({ folders, handleChange }) => {
 					variant="outline"
 					role="combobox"
 					aria-expanded={open}
-					className="w-full justify-between border-none bg-white/50"
+					className="w-full justify-between border-none bg-indigo-400/60 hover:bg-indigo-300"
 				>
 					{value
 						? folders.find((folder) => folder._id === value)?.alias
 						: "Select folder..."}
-					<ChevronsUpDown className="opacity-50" />
+					<ChevronsUpDown className="" />
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent
 				align="start"
-				className=" border-none"
+				className="border-none bg-indigo-200/60 backdrop-blur-3xl"
 				style={{
 					width: "100%",
 				}}
 			>
-				<Command className="w-full border-none">
+				<Command className="w-full border-none bg-indigo-200/20">
 					<CommandInput
 						placeholder="Search folder..."
 						className="h-9"
 					/>
 					<CommandList className="w-full border-none">
-						<CommandEmpty>No framework found.</CommandEmpty>
+						<CommandEmpty>No Folder found.</CommandEmpty>
 						<CommandGroup className="w-full border-none">
 							{folders.length > 0 &&
 								folders.map((folder) => (
