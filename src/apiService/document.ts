@@ -64,3 +64,19 @@ export const updateUploadStatus = async (
 	const data = await response.json();
 	return data;
 };
+
+export const getDocumentURLToView = async (docid: string) => {
+	const response = await fetch(`${config.API_END}/${docid}/view`, {
+		method: "GET",
+		headers: {
+			...headers,
+			Authorization: `Bearer ${localStorage.getItem("AUTH_ACCESS")}`,
+		},
+		credentials: "include",
+	});
+	if (!response.ok) {
+		throw new Error("Failed to fetch document");
+	}
+	const data = await response.json();
+	return data;
+};

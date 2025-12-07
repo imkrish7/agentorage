@@ -11,11 +11,7 @@ const Folders: FC<IProps> = ({ folders }) => {
 		<div className="w-full py-2">
 			<div className="flex overflow-x-auto gap-2">
 				{folders.map((folder, index) => (
-					<FolderCard
-						key={index}
-						folder={folder}
-						className="-z-[1000]"
-					/>
+					<FolderCard key={index} folder={folder} />
 				))}
 			</div>
 		</div>

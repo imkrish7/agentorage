@@ -11,3 +11,5 @@ const folderService = fromTransition((state, event) => {
 		}
 	}
 }, {});
+
+export const folderActor = createActor(folderService);

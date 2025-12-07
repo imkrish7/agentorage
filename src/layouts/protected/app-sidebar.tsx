@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { FolderIcon, Heart, Share2, Tag, TimerIcon } from "lucide-react";
+import { Heart, HomeIcon, Share2, Tag, TimerIcon } from "lucide-react";
 
 import { NavMain } from "./nav-main";
 import {
@@ -19,9 +19,9 @@ const data = {
 	},
 	navMain: [
 		{
-			title: "All Files",
+			title: "Home",
 			url: "/dashboard",
-			icon: FolderIcon,
+			icon: HomeIcon,
 			activeBackground: "bg-blue-300",
 			iconColor: "text-blue-600",
 			iconBackground: "bg-blue-200",
@@ -33,7 +33,7 @@ const data = {
 			url: "/recent",
 			icon: TimerIcon,
 			activeBackground: "bg-indigo-300",
-			iconColor: "text-indigo",
+			iconColor: "text-indigo-600",
 			iconBackground: "bg-indigo-200",
 			textColor: "text-indigo-600",
 		},

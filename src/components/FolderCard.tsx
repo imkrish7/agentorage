@@ -1,16 +1,19 @@
-import { CircleChevronRight, EllipsisVertical } from "lucide-react";
+import { CircleChevronRight } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import type { FC } from "react";
 import type { Folder } from "@/types/folder.types";
+import { useNavigate } from "@tanstack/react-router";
+import FolderCardAction from "./FolderCardAction";
 
 interface IProps {
-	className: string;
+	className?: string;
 	folder: Folder;
 }
 
 const FolderCard: FC<IProps> = ({ className, folder }) => {
+	const navigation = useNavigate();
 	return (
 		<Card className={`w-60 h-40 border-none shadow-md p-0 ${className}`}>
 			<CardContent className="h-full w-full p-0">
@@ -22,7 +25,7 @@ const FolderCard: FC<IProps> = ({ className, folder }) => {
 							</span>
 						</div>
 						<div className="h-[90%] bg-white/60 backdrop-blur-3xl relative rounded-l-md w-full relative">
-							<div className=" absolute bottom-10 *:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+							<div className="absolute bottom-10 *:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
 								<Avatar>
 									<AvatarImage
 										src="https://github.com/shadcn.png"
@@ -47,16 +50,16 @@ const FolderCard: FC<IProps> = ({ className, folder }) => {
 							</div>
 						</div>
 					</div>
-					<div className="bg-white/60 backdrop-blur-3xl relative h-full rounded-r-md rounded-tl-xl">
+					<div className="bg-white/60 backdrop-blur-3xl relative h-full rounded-r-md rounded-tl-xl z-10">
+						<div className="absolute right-1 top-1">
+							<FolderCardAction />
+						</div>
 						<Button
-							variant={"ghost"}
-							className="absolute right-1 top-1 cursor-pointer"
-						>
-							<EllipsisVertical />
-						</Button>
-						<Button
-							variant={"ghost"}
+							variant={"secondary"}
 							className="absolute right-1 bottom-1 cursor-pointer"
+							onClick={() => {
+								navigation({ to: `/folder/${folder._id}` });
+							}}
 						>
 							<CircleChevronRight />
 						</Button>

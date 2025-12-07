@@ -3,27 +3,36 @@ import DocumentView from "@/components/DocumentView";
 import ErrorComponent from "@/components/Error";
 import FolderView from "@/components/FolderView";
 import Loader from "@/components/Loader";
-import { useCenteralServiceState } from "@/services/centeralService";
 import type { IDocumentRecord } from "@/types/document.types";
 import type { Folder } from "@/types/folder.types";
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState, useTransition } from "react";
 
-const Component = () => {
+export const Route = createFileRoute("/_authenticated/folder/$folderId")({
+	component: RouteComponent,
+	errorComponent: ErrorComponent,
+	pendingComponent: Loader,
+});
+
+function RouteComponent() {
+	const { folderId } = Route.useParams();
 	const [documents, setDocuments] = useState<IDocumentRecord[]>([]);
 	const [folders, setFolders] = useState<Folder[]>([]);
 	const [isLoading, startTransition] = useTransition();
-	const rootFolder = useCenteralServiceState((state) => state.context.root);
 
 	useEffect(() => {
 		startTransition(async () => {
-			if (rootFolder) {
-				const response = await getFoldersAction(rootFolder);
-				setFolders([...response.data.folders]);
-				setDocuments([...response.data.documents]);
+			if (folderId) {
+				try {
+					const response = await getFoldersAction(folderId);
+					setFolders([...response.data.folders]);
+					setDocuments([...response.data.documents]);
+				} catch (error) {
+					console.error(error);
+				}
 			}
 		});
-	}, [rootFolder]);
+	}, [folderId]);
 
 	return (
 		<div className="w-full flex-1 flex flex-col">
@@ -31,16 +40,4 @@ const Component = () => {
 			<DocumentView isLoading={isLoading} documents={documents} />
 		</div>
 	);
-};
-export const Route = createFileRoute("/_authenticated/dashboard/")({
-	beforeLoad: ({ context }) => {
-		if (!context.isAuthorized) {
-			throw redirect({
-				to: "/login",
-			});
-		}
-	},
-	component: Component,
-	pendingComponent: Loader,
-	errorComponent: ErrorComponent,
-});
+}

@@ -1,7 +1,6 @@
-import { ChevronRight, File, Image } from "lucide-react";
+import { File, Image } from "lucide-react";
 
 import { Avatar } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
 	Item,
 	ItemActions,
@@ -13,13 +12,14 @@ import {
 import type { IDocumentRecord } from "@/types/document.types";
 import type { FC } from "react";
 import { iconHelper } from "@/lib/folder";
+import { DocumentRowAction } from "./DocumentRowAction";
 
 interface IProps {
 	document: IDocumentRecord;
 }
 
 const DocumentRow: FC<IProps> = ({
-	document: { filename, mime, createdAt },
+	document: { filename, mime, createdAt, _id },
 }) => {
 	return (
 		<div className="flex w-full flex-col gap-6">
@@ -40,13 +40,7 @@ const DocumentRow: FC<IProps> = ({
 					</ItemDescription>
 				</ItemContent>
 				<ItemActions className="">
-					<Button
-						size="icon-sm"
-						variant="ghost"
-						className="cursor-pointer"
-					>
-						<ChevronRight className="text-white" />
-					</Button>
+					<DocumentRowAction id={_id} />
 				</ItemActions>
 			</Item>
 		</div>

@@ -15,14 +15,18 @@ import { Route as AuthIndexRouteImport } from './routes/_auth/index'
 import { Route as AuthenticatedTagsIndexRouteImport } from './routes/_authenticated/tags/index'
 import { Route as AuthenticatedSharedIndexRouteImport } from './routes/_authenticated/shared/index'
 import { Route as AuthenticatedRecentIndexRouteImport } from './routes/_authenticated/recent/index'
+import { Route as AuthenticatedProfileIndexRouteImport } from './routes/_authenticated/profile/index'
 import { Route as AuthenticatedFavoritesIndexRouteImport } from './routes/_authenticated/favorites/index'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard/index'
-import { Route as AuthenticatedCreateIndexRouteImport } from './routes/_authenticated/create/index'
 import { Route as AuthSignupIndexRouteImport } from './routes/_auth/signup/index'
 import { Route as AuthLoginIndexRouteImport } from './routes/_auth/login/index'
 import { Route as AuthFeaturesIndexRouteImport } from './routes/_auth/features/index'
 import { Route as AuthActivateIndexRouteImport } from './routes/_auth/activate/index'
 import { Route as AuthAboutIndexRouteImport } from './routes/_auth/about/index'
+import { Route as AuthenticatedFolderFolderIdRouteImport } from './routes/_authenticated/folder/$folderId'
+import { Route as AuthenticatedDocumentsDocidViewIndexRouteImport } from './routes/_authenticated/documents/$docid/view/index'
+import { Route as AuthenticatedDocumentsDocidEditIndexRouteImport } from './routes/_authenticated/documents/$docid/edit/index'
+import { Route as AuthenticatedDocumentsDocidCreateIndexRouteImport } from './routes/_authenticated/documents/$docid/create/index'
 
 const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
   id: '/_authenticated',
@@ -54,6 +58,12 @@ const AuthenticatedRecentIndexRoute =
     path: '/recent/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedProfileIndexRoute =
+  AuthenticatedProfileIndexRouteImport.update({
+    id: '/profile/',
+    path: '/profile/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedFavoritesIndexRoute =
   AuthenticatedFavoritesIndexRouteImport.update({
     id: '/favorites/',
@@ -64,12 +74,6 @@ const AuthenticatedDashboardIndexRoute =
   AuthenticatedDashboardIndexRouteImport.update({
     id: '/dashboard/',
     path: '/dashboard/',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
-const AuthenticatedCreateIndexRoute =
-  AuthenticatedCreateIndexRouteImport.update({
-    id: '/create/',
-    path: '/create/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthSignupIndexRoute = AuthSignupIndexRouteImport.update({
@@ -97,97 +101,145 @@ const AuthAboutIndexRoute = AuthAboutIndexRouteImport.update({
   path: '/about/',
   getParentRoute: () => AuthRouteRoute,
 } as any)
+const AuthenticatedFolderFolderIdRoute =
+  AuthenticatedFolderFolderIdRouteImport.update({
+    id: '/folder/$folderId',
+    path: '/folder/$folderId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDocumentsDocidViewIndexRoute =
+  AuthenticatedDocumentsDocidViewIndexRouteImport.update({
+    id: '/documents/$docid/view/',
+    path: '/documents/$docid/view/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDocumentsDocidEditIndexRoute =
+  AuthenticatedDocumentsDocidEditIndexRouteImport.update({
+    id: '/documents/$docid/edit/',
+    path: '/documents/$docid/edit/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDocumentsDocidCreateIndexRoute =
+  AuthenticatedDocumentsDocidCreateIndexRouteImport.update({
+    id: '/documents/$docid/create/',
+    path: '/documents/$docid/create/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthIndexRoute
+  '/folder/$folderId': typeof AuthenticatedFolderFolderIdRoute
   '/about': typeof AuthAboutIndexRoute
   '/activate': typeof AuthActivateIndexRoute
   '/features': typeof AuthFeaturesIndexRoute
   '/login': typeof AuthLoginIndexRoute
   '/signup': typeof AuthSignupIndexRoute
-  '/create': typeof AuthenticatedCreateIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/favorites': typeof AuthenticatedFavoritesIndexRoute
+  '/profile': typeof AuthenticatedProfileIndexRoute
   '/recent': typeof AuthenticatedRecentIndexRoute
   '/shared': typeof AuthenticatedSharedIndexRoute
   '/tags': typeof AuthenticatedTagsIndexRoute
+  '/documents/$docid/create': typeof AuthenticatedDocumentsDocidCreateIndexRoute
+  '/documents/$docid/edit': typeof AuthenticatedDocumentsDocidEditIndexRoute
+  '/documents/$docid/view': typeof AuthenticatedDocumentsDocidViewIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof AuthIndexRoute
+  '/folder/$folderId': typeof AuthenticatedFolderFolderIdRoute
   '/about': typeof AuthAboutIndexRoute
   '/activate': typeof AuthActivateIndexRoute
   '/features': typeof AuthFeaturesIndexRoute
   '/login': typeof AuthLoginIndexRoute
   '/signup': typeof AuthSignupIndexRoute
-  '/create': typeof AuthenticatedCreateIndexRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
   '/favorites': typeof AuthenticatedFavoritesIndexRoute
+  '/profile': typeof AuthenticatedProfileIndexRoute
   '/recent': typeof AuthenticatedRecentIndexRoute
   '/shared': typeof AuthenticatedSharedIndexRoute
   '/tags': typeof AuthenticatedTagsIndexRoute
+  '/documents/$docid/create': typeof AuthenticatedDocumentsDocidCreateIndexRoute
+  '/documents/$docid/edit': typeof AuthenticatedDocumentsDocidEditIndexRoute
+  '/documents/$docid/view': typeof AuthenticatedDocumentsDocidViewIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_auth': typeof AuthRouteRouteWithChildren
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/_auth/': typeof AuthIndexRoute
+  '/_authenticated/folder/$folderId': typeof AuthenticatedFolderFolderIdRoute
   '/_auth/about/': typeof AuthAboutIndexRoute
   '/_auth/activate/': typeof AuthActivateIndexRoute
   '/_auth/features/': typeof AuthFeaturesIndexRoute
   '/_auth/login/': typeof AuthLoginIndexRoute
   '/_auth/signup/': typeof AuthSignupIndexRoute
-  '/_authenticated/create/': typeof AuthenticatedCreateIndexRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
   '/_authenticated/favorites/': typeof AuthenticatedFavoritesIndexRoute
+  '/_authenticated/profile/': typeof AuthenticatedProfileIndexRoute
   '/_authenticated/recent/': typeof AuthenticatedRecentIndexRoute
   '/_authenticated/shared/': typeof AuthenticatedSharedIndexRoute
   '/_authenticated/tags/': typeof AuthenticatedTagsIndexRoute
+  '/_authenticated/documents/$docid/create/': typeof AuthenticatedDocumentsDocidCreateIndexRoute
+  '/_authenticated/documents/$docid/edit/': typeof AuthenticatedDocumentsDocidEditIndexRoute
+  '/_authenticated/documents/$docid/view/': typeof AuthenticatedDocumentsDocidViewIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/folder/$folderId'
     | '/about'
     | '/activate'
     | '/features'
     | '/login'
     | '/signup'
-    | '/create'
     | '/dashboard'
     | '/favorites'
+    | '/profile'
     | '/recent'
     | '/shared'
     | '/tags'
+    | '/documents/$docid/create'
+    | '/documents/$docid/edit'
+    | '/documents/$docid/view'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/folder/$folderId'
     | '/about'
     | '/activate'
     | '/features'
     | '/login'
     | '/signup'
-    | '/create'
     | '/dashboard'
     | '/favorites'
+    | '/profile'
     | '/recent'
     | '/shared'
     | '/tags'
+    | '/documents/$docid/create'
+    | '/documents/$docid/edit'
+    | '/documents/$docid/view'
   id:
     | '__root__'
     | '/_auth'
     | '/_authenticated'
     | '/_auth/'
+    | '/_authenticated/folder/$folderId'
     | '/_auth/about/'
     | '/_auth/activate/'
     | '/_auth/features/'
     | '/_auth/login/'
     | '/_auth/signup/'
-    | '/_authenticated/create/'
     | '/_authenticated/dashboard/'
     | '/_authenticated/favorites/'
+    | '/_authenticated/profile/'
     | '/_authenticated/recent/'
     | '/_authenticated/shared/'
     | '/_authenticated/tags/'
+    | '/_authenticated/documents/$docid/create/'
+    | '/_authenticated/documents/$docid/edit/'
+    | '/_authenticated/documents/$docid/view/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -239,6 +291,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRecentIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/profile/': {
+      id: '/_authenticated/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/favorites/': {
       id: '/_authenticated/favorites/'
       path: '/favorites'
@@ -251,13 +310,6 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
-    '/_authenticated/create/': {
-      id: '/_authenticated/create/'
-      path: '/create'
-      fullPath: '/create'
-      preLoaderRoute: typeof AuthenticatedCreateIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_auth/signup/': {
@@ -295,6 +347,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthAboutIndexRouteImport
       parentRoute: typeof AuthRouteRoute
     }
+    '/_authenticated/folder/$folderId': {
+      id: '/_authenticated/folder/$folderId'
+      path: '/folder/$folderId'
+      fullPath: '/folder/$folderId'
+      preLoaderRoute: typeof AuthenticatedFolderFolderIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/documents/$docid/view/': {
+      id: '/_authenticated/documents/$docid/view/'
+      path: '/documents/$docid/view'
+      fullPath: '/documents/$docid/view'
+      preLoaderRoute: typeof AuthenticatedDocumentsDocidViewIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/documents/$docid/edit/': {
+      id: '/_authenticated/documents/$docid/edit/'
+      path: '/documents/$docid/edit'
+      fullPath: '/documents/$docid/edit'
+      preLoaderRoute: typeof AuthenticatedDocumentsDocidEditIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/documents/$docid/create/': {
+      id: '/_authenticated/documents/$docid/create/'
+      path: '/documents/$docid/create'
+      fullPath: '/documents/$docid/create'
+      preLoaderRoute: typeof AuthenticatedDocumentsDocidCreateIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
@@ -321,21 +401,32 @@ const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
 )
 
 interface AuthenticatedRouteRouteChildren {
-  AuthenticatedCreateIndexRoute: typeof AuthenticatedCreateIndexRoute
+  AuthenticatedFolderFolderIdRoute: typeof AuthenticatedFolderFolderIdRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
   AuthenticatedFavoritesIndexRoute: typeof AuthenticatedFavoritesIndexRoute
+  AuthenticatedProfileIndexRoute: typeof AuthenticatedProfileIndexRoute
   AuthenticatedRecentIndexRoute: typeof AuthenticatedRecentIndexRoute
   AuthenticatedSharedIndexRoute: typeof AuthenticatedSharedIndexRoute
   AuthenticatedTagsIndexRoute: typeof AuthenticatedTagsIndexRoute
+  AuthenticatedDocumentsDocidCreateIndexRoute: typeof AuthenticatedDocumentsDocidCreateIndexRoute
+  AuthenticatedDocumentsDocidEditIndexRoute: typeof AuthenticatedDocumentsDocidEditIndexRoute
+  AuthenticatedDocumentsDocidViewIndexRoute: typeof AuthenticatedDocumentsDocidViewIndexRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedCreateIndexRoute: AuthenticatedCreateIndexRoute,
+  AuthenticatedFolderFolderIdRoute: AuthenticatedFolderFolderIdRoute,
   AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
   AuthenticatedFavoritesIndexRoute: AuthenticatedFavoritesIndexRoute,
+  AuthenticatedProfileIndexRoute: AuthenticatedProfileIndexRoute,
   AuthenticatedRecentIndexRoute: AuthenticatedRecentIndexRoute,
   AuthenticatedSharedIndexRoute: AuthenticatedSharedIndexRoute,
   AuthenticatedTagsIndexRoute: AuthenticatedTagsIndexRoute,
+  AuthenticatedDocumentsDocidCreateIndexRoute:
+    AuthenticatedDocumentsDocidCreateIndexRoute,
+  AuthenticatedDocumentsDocidEditIndexRoute:
+    AuthenticatedDocumentsDocidEditIndexRoute,
+  AuthenticatedDocumentsDocidViewIndexRoute:
+    AuthenticatedDocumentsDocidViewIndexRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =

@@ -1,3 +1,5 @@
+import ErrorComponent from "@/components/Error";
+import Loader from "@/components/Loader";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/tags/")({
@@ -9,6 +11,8 @@ export const Route = createFileRoute("/_authenticated/tags/")({
 		}
 	},
 	component: RouteComponent,
+	errorComponent: ErrorComponent,
+	pendingComponent: Loader,
 });
 
 function RouteComponent() {

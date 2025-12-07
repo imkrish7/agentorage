@@ -1,4 +1,11 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import DocumentView from "@/components/DocumentView";
+import FolderView from "@/components/FolderView";
+import Loader from "@/components/Loader";
+import {
+	createFileRoute,
+	ErrorComponent,
+	redirect,
+} from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authenticated/favorites/")({
 	beforeLoad: ({ context }) => {
@@ -9,8 +16,15 @@ export const Route = createFileRoute("/_authenticated/favorites/")({
 		}
 	},
 	component: RouteComponent,
+	errorComponent: ErrorComponent,
+	pendingComponent: Loader,
 });
 
 function RouteComponent() {
-	return <div>Hello "/favorites/"!</div>;
+	return (
+		<div className="w-full flex-1 flex flex-col">
+			<FolderView isLoading={false} folders={[]} />
+			<DocumentView isLoading={false} documents={[]} />
+		</div>
+	);
 }
