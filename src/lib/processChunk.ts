@@ -1,0 +1,49 @@
+import {
+	SSE_DATA_PREFIX,
+	SSE_DONE_MESSAGE,
+	StreamMessageType,
+	type StreamMessage,
+} from "@/types/chat";
+
+export const processChunk = () => {
+	let buffer = "";
+
+	const parser = (chunk: string) => {
+		console.log(chunk);
+		const lines = (buffer + chunk).split("\n");
+		buffer = lines.pop() || "";
+
+		return lines
+			.map((line) => {
+				const trimmed = line.trim();
+
+				if (!trimmed || trimmed.startsWith(SSE_DATA_PREFIX))
+					return null;
+
+				const data = trimmed.substring(SSE_DATA_PREFIX.length);
+
+				if (data === SSE_DONE_MESSAGE) {
+					return { type: StreamMessageType.Done };
+				}
+
+				try {
+					const parsed = JSON.parse(data) as StreamMessage;
+
+					return Object.values(StreamMessageType).includes(
+						parsed.type,
+					)
+						? parsed
+						: null;
+				} catch (error) {
+					console.error(error);
+					return {
+						type: StreamMessageType.Error,
+						error: "Failed to parse the SSE message",
+					};
+				}
+			})
+			.filter((msg): msg is StreamMessage => msg != null);
+	};
+
+	return { parser };
+};

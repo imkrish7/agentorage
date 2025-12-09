@@ -134,7 +134,7 @@ function RouteComponent() {
 						Next
 					</Button>
 				</div>
-				<ChatInterface />
+				<ChatInterface docid={docid} />
 			</div>
 			<div className="w-full h-inherit relative flex">
 				{isPending && <Loader />}

@@ -72,6 +72,7 @@ export const getDocumentURLToView = async (docid: string) => {
 			...headers,
 			Authorization: `Bearer ${localStorage.getItem("AUTH_ACCESS")}`,
 		},
+
 		credentials: "include",
 	});
 	if (!response.ok) {
@@ -79,4 +80,17 @@ export const getDocumentURLToView = async (docid: string) => {
 	}
 	const data = await response.json();
 	return data;
+};
+
+export const talkToDocument = async (docid: string, query: string) => {
+	const response = await fetch(`${config.API_END}/${docid}/chat`, {
+		method: "POST",
+		headers: {
+			...headers,
+			Authorization: `Bearer ${localStorage.getItem("AUTH_ACCESS")}`,
+		},
+		body: JSON.stringify({ query }),
+		credentials: "include",
+	});
+	return response;
 };
