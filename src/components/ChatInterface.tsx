@@ -13,7 +13,14 @@ import {
 	DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Input } from "./ui/input";
-import { startTransition, useOptimistic, useState, type FC } from "react";
+import {
+	startTransition,
+	useEffect,
+	useOptimistic,
+	useRef,
+	useState,
+	type FC,
+} from "react";
 import { talkToDocument } from "@/apiService/document";
 import { toast } from "sonner";
 import { processChunk } from "@/lib/processChunk";
@@ -29,6 +36,7 @@ interface IMessage {
 }
 export const ChatInterface: FC<IProps> = ({ docid }) => {
 	const [query, setQuery] = useState<string>("");
+	const messageEndRef = useRef<HTMLDivElement>(null);
 	const [chatResponseLoading, setChatResponseLoading] =
 		useState<boolean>(false);
 	const [streamResponse, setStreamResponse] = useOptimistic(
@@ -77,15 +85,13 @@ export const ChatInterface: FC<IProps> = ({ docid }) => {
 				const _messages = parser(chunk);
 
 				for (const _message of _messages) {
-					console.log(_message);
 					switch (_message.type) {
 						case StreamMessageType.Token: {
 							if ("token" in _message) {
 								fullResponse += _message.token;
-								startTransition(() => {
-									setStreamResponse(fullResponse);
-									setChatResponseLoading(false);
-								});
+
+								setStreamResponse(fullResponse);
+								setChatResponseLoading(false);
 							}
 							break;
 						}
@@ -96,6 +102,8 @@ export const ChatInterface: FC<IProps> = ({ docid }) => {
 									{ type: "ai", message: fullResponse },
 								]);
 							});
+
+							setStreamResponse("");
 
 							break;
 						}
@@ -108,6 +116,12 @@ export const ChatInterface: FC<IProps> = ({ docid }) => {
 			setChatResponseLoading(false);
 		}
 	};
+
+	useEffect(() => {
+		if (messageEndRef) {
+			messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+		}
+	}, [messages, messageEndRef]);
 	return (
 		<Drawer direction="right">
 			<DrawerTrigger asChild>
@@ -143,19 +157,20 @@ export const ChatInterface: FC<IProps> = ({ docid }) => {
 						})}
 						{chatResponseLoading && "loading..."}
 						{!chatResponseLoading && streamResponse.length > 0 && (
-							<div className={`absolute right-0`}>
+							<div className={``}>
 								<span className="text-sm">
 									{streamResponse}
 								</span>
 							</div>
 						)}
+						<div ref={messageEndRef} />
 					</div>
 
 					<DrawerFooter>
 						<div className="flex items-center border-1 rounded-md px-2 active:focus:none">
 							<Input
 								className="border-none bg-none dark:bg-input-none selection:bg-none focus-visible:ring-[0] border-input-none focus:border-none focus:border-none active:outline-none"
-								placeholder="summarise the rfp"
+								placeholder="How can I help you?"
 								value={query}
 								onChange={(e) => setQuery(e.target.value)}
 							/>

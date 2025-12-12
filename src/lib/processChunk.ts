@@ -17,7 +17,7 @@ export const processChunk = () => {
 			.map((line) => {
 				const trimmed = line.trim();
 
-				if (!trimmed || trimmed.startsWith(SSE_DATA_PREFIX))
+				if (!trimmed || !trimmed.startsWith(SSE_DATA_PREFIX))
 					return null;
 
 				const data = trimmed.substring(SSE_DATA_PREFIX.length);
@@ -27,8 +27,9 @@ export const processChunk = () => {
 				}
 
 				try {
+					console.log("DATa", data);
 					const parsed = JSON.parse(data) as StreamMessage;
-
+					console.log("pareded", parsed);
 					return Object.values(StreamMessageType).includes(
 						parsed.type,
 					)

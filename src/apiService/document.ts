@@ -94,3 +94,20 @@ export const talkToDocument = async (docid: string, query: string) => {
 	});
 	return response;
 };
+
+export const deleteDocument = async (documentId: string) => {
+	const response = await fetch(`${config.API_END}/${documentId}/delete`, {
+		method: "POST",
+		headers: {
+			...headers,
+			Authorization: `Bearer ${localStorage.getItem("AUTH_ACCESS")}`,
+		},
+
+		credentials: "include",
+	});
+	if (!response.ok) {
+		throw new Error("Failed to fetch delete");
+	}
+	const data = await response.json();
+	return data;
+};

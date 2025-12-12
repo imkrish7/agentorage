@@ -4,10 +4,9 @@ import {
 	DropdownMenuContent,
 	DropdownMenuGroup,
 	DropdownMenuItem,
-	DropdownMenuSeparator,
-	DropdownMenuShortcut,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { AlertDialogAction } from "@radix-ui/react-alert-dialog";
 import { useNavigate } from "@tanstack/react-router";
 import { ChevronRightIcon } from "lucide-react";
 import type { FC } from "react";
@@ -30,12 +29,21 @@ export const DocumentRowAction: FC<IProps> = ({ id }) => {
 						onClick={() => {
 							navigate({ to: `/documents/${id}/view` });
 						}}
+						className="p-0"
 					>
-						View
-						<DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+						<span className="flex text-blue-600 hover:bg-blue-200 w-full px-2 py-1.5 rounded-md">
+							View
+						</span>
+					</DropdownMenuItem>
+					<DropdownMenuItem
+						// onClick={() => {
+						// 	alert("Hell is real");
+						// }}
+						className="p-0"
+					>
+						<AlertDialogAction />
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
-				<DropdownMenuSeparator />
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

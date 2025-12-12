@@ -12,7 +12,9 @@ import {
 import type { IDocumentRecord } from "@/types/document.types";
 import type { FC } from "react";
 import { iconHelper } from "@/lib/folder";
-import { DocumentRowAction } from "./DocumentRowAction";
+import { Button } from "./ui/button";
+import { useNavigate } from "@tanstack/react-router";
+import { DeleteAlertDialog } from "./DeleteAlertDialog";
 
 interface IProps {
 	document: IDocumentRecord;
@@ -21,6 +23,7 @@ interface IProps {
 const DocumentRow: FC<IProps> = ({
 	document: { filename, mime, createdAt, _id },
 }) => {
+	const navigate = useNavigate();
 	return (
 		<div className="flex w-full flex-col gap-6">
 			<Item variant="outline" className="w-full bg-gray-200/50">
@@ -40,7 +43,20 @@ const DocumentRow: FC<IProps> = ({
 					</ItemDescription>
 				</ItemContent>
 				<ItemActions className="">
-					<DocumentRowAction id={_id} />
+					{/* <DocumentRowAction id={_id} /> */}
+					<Button
+						onClick={() => {
+							navigate({
+								to: `/documents/${_id}/view?viewer=${iconHelper(mime) == "image" ? "image" : "pdf"}`,
+							});
+						}}
+						variant={"secondary"}
+					>
+						View
+					</Button>
+					<div>
+						<DeleteAlertDialog documentId={_id} />
+					</div>
 				</ItemActions>
 			</Item>
 		</div>
