@@ -14,6 +14,7 @@ import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as AuthIndexRouteImport } from './routes/_auth/index'
 import { Route as AuthenticatedTagsIndexRouteImport } from './routes/_authenticated/tags/index'
 import { Route as AuthenticatedSharedIndexRouteImport } from './routes/_authenticated/shared/index'
+import { Route as AuthenticatedSearchIndexRouteImport } from './routes/_authenticated/search/index'
 import { Route as AuthenticatedRecentIndexRouteImport } from './routes/_authenticated/recent/index'
 import { Route as AuthenticatedProfileIndexRouteImport } from './routes/_authenticated/profile/index'
 import { Route as AuthenticatedFavoritesIndexRouteImport } from './routes/_authenticated/favorites/index'
@@ -24,6 +25,7 @@ import { Route as AuthFeaturesIndexRouteImport } from './routes/_auth/features/i
 import { Route as AuthActivateIndexRouteImport } from './routes/_auth/activate/index'
 import { Route as AuthAboutIndexRouteImport } from './routes/_auth/about/index'
 import { Route as AuthenticatedFolderFolderIdRouteImport } from './routes/_authenticated/folder/$folderId'
+import { Route as AuthenticatedDashboardViewIndexRouteImport } from './routes/_authenticated/dashboard/view/index'
 import { Route as AuthenticatedDocumentsDocidViewIndexRouteImport } from './routes/_authenticated/documents/$docid/view/index'
 import { Route as AuthenticatedDocumentsDocidEditIndexRouteImport } from './routes/_authenticated/documents/$docid/edit/index'
 import { Route as AuthenticatedDocumentsDocidCreateIndexRouteImport } from './routes/_authenticated/documents/$docid/create/index'
@@ -50,6 +52,12 @@ const AuthenticatedSharedIndexRoute =
   AuthenticatedSharedIndexRouteImport.update({
     id: '/shared/',
     path: '/shared/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedSearchIndexRoute =
+  AuthenticatedSearchIndexRouteImport.update({
+    id: '/search/',
+    path: '/search/',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedRecentIndexRoute =
@@ -107,6 +115,12 @@ const AuthenticatedFolderFolderIdRoute =
     path: '/folder/$folderId',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedDashboardViewIndexRoute =
+  AuthenticatedDashboardViewIndexRouteImport.update({
+    id: '/dashboard/view/',
+    path: '/dashboard/view/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedDocumentsDocidViewIndexRoute =
   AuthenticatedDocumentsDocidViewIndexRouteImport.update({
     id: '/documents/$docid/view/',
@@ -138,8 +152,10 @@ export interface FileRoutesByFullPath {
   '/favorites': typeof AuthenticatedFavoritesIndexRoute
   '/profile': typeof AuthenticatedProfileIndexRoute
   '/recent': typeof AuthenticatedRecentIndexRoute
+  '/search': typeof AuthenticatedSearchIndexRoute
   '/shared': typeof AuthenticatedSharedIndexRoute
   '/tags': typeof AuthenticatedTagsIndexRoute
+  '/dashboard/view': typeof AuthenticatedDashboardViewIndexRoute
   '/documents/$docid/create': typeof AuthenticatedDocumentsDocidCreateIndexRoute
   '/documents/$docid/edit': typeof AuthenticatedDocumentsDocidEditIndexRoute
   '/documents/$docid/view': typeof AuthenticatedDocumentsDocidViewIndexRoute
@@ -156,8 +172,10 @@ export interface FileRoutesByTo {
   '/favorites': typeof AuthenticatedFavoritesIndexRoute
   '/profile': typeof AuthenticatedProfileIndexRoute
   '/recent': typeof AuthenticatedRecentIndexRoute
+  '/search': typeof AuthenticatedSearchIndexRoute
   '/shared': typeof AuthenticatedSharedIndexRoute
   '/tags': typeof AuthenticatedTagsIndexRoute
+  '/dashboard/view': typeof AuthenticatedDashboardViewIndexRoute
   '/documents/$docid/create': typeof AuthenticatedDocumentsDocidCreateIndexRoute
   '/documents/$docid/edit': typeof AuthenticatedDocumentsDocidEditIndexRoute
   '/documents/$docid/view': typeof AuthenticatedDocumentsDocidViewIndexRoute
@@ -177,8 +195,10 @@ export interface FileRoutesById {
   '/_authenticated/favorites/': typeof AuthenticatedFavoritesIndexRoute
   '/_authenticated/profile/': typeof AuthenticatedProfileIndexRoute
   '/_authenticated/recent/': typeof AuthenticatedRecentIndexRoute
+  '/_authenticated/search/': typeof AuthenticatedSearchIndexRoute
   '/_authenticated/shared/': typeof AuthenticatedSharedIndexRoute
   '/_authenticated/tags/': typeof AuthenticatedTagsIndexRoute
+  '/_authenticated/dashboard/view/': typeof AuthenticatedDashboardViewIndexRoute
   '/_authenticated/documents/$docid/create/': typeof AuthenticatedDocumentsDocidCreateIndexRoute
   '/_authenticated/documents/$docid/edit/': typeof AuthenticatedDocumentsDocidEditIndexRoute
   '/_authenticated/documents/$docid/view/': typeof AuthenticatedDocumentsDocidViewIndexRoute
@@ -197,8 +217,10 @@ export interface FileRouteTypes {
     | '/favorites'
     | '/profile'
     | '/recent'
+    | '/search'
     | '/shared'
     | '/tags'
+    | '/dashboard/view'
     | '/documents/$docid/create'
     | '/documents/$docid/edit'
     | '/documents/$docid/view'
@@ -215,8 +237,10 @@ export interface FileRouteTypes {
     | '/favorites'
     | '/profile'
     | '/recent'
+    | '/search'
     | '/shared'
     | '/tags'
+    | '/dashboard/view'
     | '/documents/$docid/create'
     | '/documents/$docid/edit'
     | '/documents/$docid/view'
@@ -235,8 +259,10 @@ export interface FileRouteTypes {
     | '/_authenticated/favorites/'
     | '/_authenticated/profile/'
     | '/_authenticated/recent/'
+    | '/_authenticated/search/'
     | '/_authenticated/shared/'
     | '/_authenticated/tags/'
+    | '/_authenticated/dashboard/view/'
     | '/_authenticated/documents/$docid/create/'
     | '/_authenticated/documents/$docid/edit/'
     | '/_authenticated/documents/$docid/view/'
@@ -282,6 +308,13 @@ declare module '@tanstack/react-router' {
       path: '/shared'
       fullPath: '/shared'
       preLoaderRoute: typeof AuthenticatedSharedIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/search/': {
+      id: '/_authenticated/search/'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof AuthenticatedSearchIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/recent/': {
@@ -354,6 +387,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedFolderFolderIdRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/dashboard/view/': {
+      id: '/_authenticated/dashboard/view/'
+      path: '/dashboard/view'
+      fullPath: '/dashboard/view'
+      preLoaderRoute: typeof AuthenticatedDashboardViewIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/documents/$docid/view/': {
       id: '/_authenticated/documents/$docid/view/'
       path: '/documents/$docid/view'
@@ -406,8 +446,10 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedFavoritesIndexRoute: typeof AuthenticatedFavoritesIndexRoute
   AuthenticatedProfileIndexRoute: typeof AuthenticatedProfileIndexRoute
   AuthenticatedRecentIndexRoute: typeof AuthenticatedRecentIndexRoute
+  AuthenticatedSearchIndexRoute: typeof AuthenticatedSearchIndexRoute
   AuthenticatedSharedIndexRoute: typeof AuthenticatedSharedIndexRoute
   AuthenticatedTagsIndexRoute: typeof AuthenticatedTagsIndexRoute
+  AuthenticatedDashboardViewIndexRoute: typeof AuthenticatedDashboardViewIndexRoute
   AuthenticatedDocumentsDocidCreateIndexRoute: typeof AuthenticatedDocumentsDocidCreateIndexRoute
   AuthenticatedDocumentsDocidEditIndexRoute: typeof AuthenticatedDocumentsDocidEditIndexRoute
   AuthenticatedDocumentsDocidViewIndexRoute: typeof AuthenticatedDocumentsDocidViewIndexRoute
@@ -419,8 +461,10 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedFavoritesIndexRoute: AuthenticatedFavoritesIndexRoute,
   AuthenticatedProfileIndexRoute: AuthenticatedProfileIndexRoute,
   AuthenticatedRecentIndexRoute: AuthenticatedRecentIndexRoute,
+  AuthenticatedSearchIndexRoute: AuthenticatedSearchIndexRoute,
   AuthenticatedSharedIndexRoute: AuthenticatedSharedIndexRoute,
   AuthenticatedTagsIndexRoute: AuthenticatedTagsIndexRoute,
+  AuthenticatedDashboardViewIndexRoute: AuthenticatedDashboardViewIndexRoute,
   AuthenticatedDocumentsDocidCreateIndexRoute:
     AuthenticatedDocumentsDocidCreateIndexRoute,
   AuthenticatedDocumentsDocidEditIndexRoute:

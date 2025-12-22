@@ -126,6 +126,16 @@
 	--sidebar-ring: oklch(0.38 0.189 293.745);
 }
 
+/* body {
+	background: linear-gradient(
+		45deg,
+		rgb(250 218 97 / 10%) 0%,
+		rgb(255 145 136 / 65%) 50%,
+		rgb(255 90 205 / 10%) 100%
+	);
+	min-height: 100vh;
+} */
+
 .folded-rectangle {
 	--r: 20px; /* radius */
 	position: absolute;

@@ -3,19 +3,21 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
 import type { FC } from "react";
-import type { Folder } from "@/types/folder.types";
+import type { IFolderRecord } from "@/types/folder.types";
 import { useNavigate } from "@tanstack/react-router";
 import FolderCardAction from "./FolderCardAction";
 
 interface IProps {
 	className?: string;
-	folder: Folder;
+	folder: IFolderRecord;
 }
 
 const FolderCard: FC<IProps> = ({ className, folder }) => {
 	const navigation = useNavigate();
 	return (
-		<Card className={`w-60 h-40 border-none shadow-md p-0 ${className}`}>
+		<Card
+			className={`w-[300px] h-40 border-none shadow-md p-0 ${className}`}
+		>
 			<CardContent className="h-full w-full p-0">
 				<div className="w-full h-full bg-indigo-200 grid grid-cols-2 rounded-md border-4 border-indigo-200">
 					<div className="h-full relative justify-end flex flex-col">
@@ -58,7 +60,9 @@ const FolderCard: FC<IProps> = ({ className, folder }) => {
 							variant={"secondary"}
 							className="absolute right-1 bottom-1 cursor-pointer"
 							onClick={() => {
-								navigation({ to: `/folder/${folder._id}` });
+								navigation({
+									to: `/folder/${folder._id}?view=all&resources=all`,
+								});
 							}}
 						>
 							<CircleChevronRight />

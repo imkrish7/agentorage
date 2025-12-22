@@ -70,8 +70,9 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
 		<Sidebar
-			className="top-0 fixed h-screen overflow-hidden border-none backdrop-blur-xl"
+			className="top-0 left-0 fixed border-none backdrop-blur-xl"
 			{...props}
+			collapsible="offcanvas"
 		>
 			<SidebarHeader className="h-16 bg-white/20">
 				<div>

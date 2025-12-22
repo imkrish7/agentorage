@@ -1,4 +1,5 @@
-export interface IDocumentRecord {
+export type IDocumentRecord = {
+	type: "document";
 	sourceFile: {
 		status: boolean;
 	};
@@ -9,4 +10,4 @@ export interface IDocumentRecord {
 	folderId: string;
 	createdAt: string;
 	updatedAt: string;
-}
+};

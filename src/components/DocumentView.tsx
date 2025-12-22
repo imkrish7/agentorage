@@ -1,8 +1,10 @@
 import type { IDocumentRecord } from "@/types/document.types";
 import DocumentRow from "./DocumentRow";
-import { Button } from "./ui/button";
 import type { FC } from "react";
 import Loader from "./Loader";
+import { Button } from "./ui/button";
+import { useNavigate } from "@tanstack/react-router";
+import { useCenteralServiceState } from "@/services/centeralService";
 
 interface IProps {
 	documents: IDocumentRecord[];
@@ -10,6 +12,8 @@ interface IProps {
 }
 
 const DocumentView: FC<IProps> = ({ documents, isLoading }) => {
+	const navigate = useNavigate();
+	const rootFolder = useCenteralServiceState((state) => state.context.root);
 	return (
 		<div className="flex flex-col flex-1 mt-10 w-full gap-2">
 			<div className="flex w-full justify-between">
@@ -17,6 +21,11 @@ const DocumentView: FC<IProps> = ({ documents, isLoading }) => {
 					<span className="text-2xl font-bold">Documents</span>
 				</div>
 				<Button
+					onClick={() => {
+						navigate({
+							to: `/folder/${rootFolder}?view=all&resources=documents`,
+						});
+					}}
 					variant={"outline"}
 					className="border-none cursor-pointer shadow-sm shadow-gray-100/10"
 				>

@@ -1,12 +1,19 @@
 import { config } from "@/config";
 import { headers } from "./apiConfig";
 import type { CreateFolder } from "@/types/folder.types";
+interface Search {
+	view: string;
+	resources: string;
+}
 
-export const getFoldersAction = async (rootFolder?: string) => {
+export const getFoldersAction = async (
+	rootFolder?: string,
+	search?: Search,
+) => {
 	try {
 		const response = await fetch(
 			rootFolder
-				? `${config.API_END}/folders/${rootFolder}`
+				? `${config.API_END}/folders/${rootFolder}?view=${search?.view}&resources=${search?.resources}`
 				: `${config.API_END}/folders`,
 			{
 				method: "GET",
@@ -14,6 +21,7 @@ export const getFoldersAction = async (rootFolder?: string) => {
 					...headers,
 					Authorization: `Bearer ${localStorage.getItem("AUTH_ACCESS")}`,
 				},
+
 				credentials: "include",
 			},
 		);

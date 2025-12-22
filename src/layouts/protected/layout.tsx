@@ -13,13 +13,13 @@ export const description = "A sidebar with a header and a search form.";
 export default function Layout() {
 	const documentServiceState = useDocumentServiceState((state) => state);
 	return (
-		<div className="[--header-height:calc(--spacing(14))] h-screen overflow-hidden background-g">
-			<SidebarProvider className="flex flex-row backdrop-blur-3xl">
+		<div className="[--header-height:calc(--spacing(14))] min-h-screen w-full background-g">
+			<SidebarProvider>
 				<AppSidebar />
-				<div className="flex flex-1 flex-col">
+				<div className="flex h-screen overflow-y-scroll flex-col w-full">
 					<SiteHeader />
 					<SidebarInset>
-						<div className="flex flex-1 max-h-screen flex-col gap-4 p-4 overflow-auto overflow-x-hidden">
+						<div className="flex w-full flex-col gap-4 p-4">
 							<Outlet />
 						</div>
 					</SidebarInset>

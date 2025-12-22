@@ -1,4 +1,5 @@
-export interface Folder {
+export type IFolderRecord = {
+	type: "folder";
 	_id: string;
 	name: string;
 	alias: string;
@@ -10,7 +11,7 @@ export interface Folder {
 	};
 	createdAt: string;
 	updatedAt: string;
-}
+};
 
 export interface CreateFolder {
 	parentId: string;
