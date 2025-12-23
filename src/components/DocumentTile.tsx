@@ -6,13 +6,15 @@ import type { FC } from "react";
 
 interface IProps {
 	document: IDocumentRecord;
+	toggleModel?: () => void;
 }
 
-const DocumentTile: FC<IProps> = ({ document }) => {
+const DocumentTile: FC<IProps> = ({ document, toggleModel }) => {
 	const navigate = useNavigate();
 	return (
 		<div
 			onClick={() => {
+				toggleModel?.();
 				navigate({
 					to: `/documents/${document._id}/view?viewer=${iconHelper(document.mime) == "image" ? "image" : "pdf"}`,
 				});

@@ -5,11 +5,12 @@ interface IProps {
 }
 
 export function SearchForm({ handleSearchPannel }: IProps) {
+	const handleClick = () => {
+		console.log("clickeddd");
+		handleSearchPannel();
+	};
 	return (
-		<div
-			onClick={handleSearchPannel}
-			className="relative flex-1 rounded-md"
-		>
+		<div onClick={handleClick} className="relative flex-1 rounded-md">
 			<div
 				id="search"
 				className="h-8 pl-7 bg-white/60 backdrop-blur-md border-white rounded-md"

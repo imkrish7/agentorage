@@ -1,70 +1,97 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Button } from "@/components/ui/button";
+import { searchDocument } from "@/apiService/document";
+import DocumentTile from "@/components/DocumentTile";
 import {
 	Dialog,
-	DialogClose,
 	DialogContent,
-	DialogDescription,
-	DialogFooter,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { SearchForm } from "@/layouts/protected/search-form";
-import { useState } from "react";
+import type { IDocumentRecord } from "@/types/document.types";
+import { Loader2Icon, SearchIcon } from "lucide-react";
+import { useMemo, useState, useTransition, type ChangeEvent } from "react";
+import { toast } from "sonner";
 
-export const Route = createFileRoute("/_authenticated/search/")({
-	component: RouteComponent,
-});
-
-function RouteComponent() {
+export default function Search() {
 	const [open, setOpen] = useState<boolean>(false);
+	const [documents, setDocuments] = useState<IDocumentRecord[]>([]);
+	const [isPending, startTransition] = useTransition();
 	const toggleSearchPannel = () => {
-		console.log("handller");
-		setOpen((prev) => !prev);
+		startTransition(() => {
+			setOpen((prev) => !prev);
+			setDocuments([]);
+		});
 	};
+	const handleSearch = (search: string) => {
+		startTransition(async () => {
+			try {
+				const response = await searchDocument(search);
+				setDocuments([...response.documents]);
+			} catch (error) {
+				if (error instanceof Error) {
+					toast.error(error.message);
+				} else {
+					toast.error("Error fetching document");
+				}
+			}
+		});
+	};
+
+	const debounce = (fn: (search: string) => void, delay: number) => {
+		let timeout: ReturnType<typeof setTimeout>;
+
+		return (search: string) => {
+			clearTimeout(timeout);
+			timeout = setTimeout(() => fn(search), delay);
+		};
+	};
+
+	const debounceSearch = useMemo(() => {
+		return debounce(handleSearch, 300);
+	}, []);
+
 	return (
-		<Dialog open={open}>
-			{/* <form> */}
+		<Dialog open={open} onOpenChange={toggleSearchPannel}>
 			<DialogTrigger asChild className="rounded-md">
 				<SearchForm handleSearchPannel={toggleSearchPannel} />
 			</DialogTrigger>
-			<DialogContent className="sm:max-w-[425px]">
+			<DialogContent className="h-full sm:max-w-4xl sm:max-h-2/3 border-none">
 				<DialogHeader>
-					<DialogTitle>Edit profile</DialogTitle>
-					<DialogDescription>
-						Make changes to your profile here. Click save when
-						you&apos;re done.
-					</DialogDescription>
+					<DialogTitle>
+						<div className="grid gap-4 mt-2">
+							<div className="relative flex border-b-1 gap-2 border-gray-400">
+								<SearchIcon className="absolute bottom-2.5 size-4" />
+								<Input
+									onChange={(
+										e: ChangeEvent<HTMLInputElement>,
+									) => {
+										debounceSearch(e.target.value);
+									}}
+									className="border-none shadow-none ml-2"
+									placeholder="Search..."
+								/>
+							</div>
+						</div>
+					</DialogTitle>
 				</DialogHeader>
-				<div className="grid gap-4">
-					<div className="grid gap-3">
-						<Label htmlFor="name-1">Name</Label>
-						<Input
-							id="name-1"
-							name="name"
-							defaultValue="Pedro Duarte"
-						/>
-					</div>
-					<div className="grid gap-3">
-						<Label htmlFor="username-1">Username</Label>
-						<Input
-							id="username-1"
-							name="username"
-							defaultValue="@peduarte"
-						/>
-					</div>
+				<div className="flex gap-5">
+					{isPending && (
+						<Loader2Icon className="size-20 animate-spin" />
+					)}
+					{documents.length > 0 &&
+						documents.map((document) => {
+							return (
+								<DocumentTile
+									key={document._id}
+									document={document}
+									toggleModel={toggleSearchPannel}
+								/>
+							);
+						})}
 				</div>
-				<DialogFooter>
-					<DialogClose asChild>
-						<Button variant="outline">Cancel</Button>
-					</DialogClose>
-					<Button type="submit">Save changes</Button>
-				</DialogFooter>
 			</DialogContent>
-			{/* </form> */}
 		</Dialog>
 	);
 }

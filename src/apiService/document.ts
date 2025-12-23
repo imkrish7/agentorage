@@ -111,3 +111,20 @@ export const deleteDocument = async (documentId: string) => {
 	const data = await response.json();
 	return data;
 };
+
+export const searchDocument = async (query: string) => {
+	const response = await fetch(`${config.API_END}/search`, {
+		method: "POST",
+		headers: {
+			...headers,
+			Authorization: `Bearer ${localStorage.getItem("AUTH_ACCESS")}`,
+		},
+		body: JSON.stringify({ query }),
+		credentials: "include",
+	});
+	if (!response.ok) {
+		throw new Error("Failed to fetch delete");
+	}
+	const data = await response.json();
+	return data;
+};
